@@ -1351,4 +1351,533 @@ h1 em {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
+/* ===================================
+   ALEXANDROS PHOTO GALLERY
+=================================== */
 
+.photo-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 28px;
+}
+
+.photo-filter,
+.photo-more-btn {
+    border: 1px solid #17628e;
+    background: white;
+    color: #17628e;
+    border-radius: 40px;
+    padding: 11px 19px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.photo-filter.active,
+.photo-filter:hover,
+.photo-more-btn:hover {
+    background: #17628e;
+    color: white;
+}
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.photo-card {
+    display: block;
+    width: 100%;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.photo-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.photo-card:hover img {
+    transform: scale(1.045);
+}
+
+.photo-card[hidden] {
+    display: none !important;
+}
+
+.photo-gallery-actions {
+    text-align: center;
+    margin-top: 26px;
+}
+
+/* FULLSCREEN PHOTO VIEWER */
+
+.photo-lightbox:not([hidden]) {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.92);
+    padding: 55px 55px 30px;
+}
+
+.photo-lightbox figure {
+    margin: 0;
+    max-width: 90vw;
+    text-align: center;
+}
+
+.photo-lightbox img {
+    display: block;
+    max-width: 100%;
+    max-height: 76vh;
+    object-fit: contain;
+    margin: auto;
+}
+
+.photo-lightbox figcaption {
+    color: white;
+    margin-top: 12px;
+}
+
+.photo-lightbox button {
+    position: absolute;
+    color: white;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid #aaa;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 26px;
+    padding: 5px 13px;
+}
+
+.photo-lightbox-close {
+    right: 20px;
+    top: 12px;
+}
+
+.photo-lightbox-prev {
+    left: 10px;
+    top: 50%;
+}
+
+.photo-lightbox-next {
+    right: 10px;
+    top: 50%;
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 750px) {
+    .photo-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .photo-lightbox:not([hidden]) {
+        padding: 60px 35px 30px;
+    }
+}
+
+@media (max-width: 420px) {
+    .photo-gallery {
+        grid-template-columns: 1fr;
+    }
+}
+/* RESTAURANT OPENING HOURS */
+
+.opening-hours {
+    margin-top: 20px;
+}
+
+.opening-hours h3 {
+    color: #17628e;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.opening-hours p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 5px;
+}
+
+/* ===================================
+   MENU CATEGORY PHOTO BACKGROUNDS
+=================================== */
+
+.menu-photo-heading {
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 12px;
+    margin: 30px 0 25px;
+    padding: 30px 20px;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: white;
+    overflow: hidden;
+}
+
+.menu-photo-heading h3 {
+    color: white;
+    font-size: clamp(28px, 4vw, 44px);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* WRAPS */
+.menu-photo-heading.wraps {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url("images/wrap-5.jpeg");
+}
+
+/* STICKS */
+.menu-photo-heading.sticks {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url("images/souvlaki.jpeg");
+}
+
+/* BURGERS */
+.menu-photo-heading.burgers {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url("images/burger.jpeg");
+}
+
+/* DINNERS */
+.menu-photo-heading.dinners {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url("images/dinner-5.jpeg");
+}
+
+/* SALADS */
+.menu-photo-heading.salads {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url("images/village.jpeg");
+}
+
+/* SIDES & APPETIZERS */
+.menu-photo-heading.sides {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url("images/tzatziki.jpeg");
+}
+
+@media (max-width: 750px) {
+    .menu-photo-heading {
+        min-height: 150px;
+        margin: 20px 0;
+    }
+}
+
+/* MENU PHOTO BANNER GRID FIX */
+
+.menu-grid > .menu-photo-heading {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+.menu-photo-heading {
+    position: relative;
+    min-height: 210px;
+}
+
+.menu-photo-heading h3 {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    color: #ffffff;
+}
+
+/* NEW PHOTO MENU DESIGN */
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+}
+
+.menu-grid .menu-photo-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 30px 22px;
+    border-radius: 16px;
+    overflow: hidden;
+    isolation: isolate;
+
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+
+/* Lighter overlay — food photos stay visible */
+.menu-grid .menu-photo-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 25, 50, 0.15) 0%,
+        rgba(0, 30, 55, 0.35) 30%,
+        rgba(0, 30, 55, 0.55) 65%,
+        rgba(0, 30, 55, 0.70) 100%
+    );
+}
+
+
+.menu-grid .menu-card-title {
+    color: white;
+    font-family: Georgia, serif;
+    font-size: 32px;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0 0 25px;
+}
+
+.menu-grid .menu-card-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-grid .menu-photo-card .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.25);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.menu-grid .menu-photo-card .menu-item h3,
+.menu-grid .menu-photo-card .menu-price {
+    color: white;
+    font-size: 14px;
+}
+
+.menu-grid .menu-photo-card .menu-item p {
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+}
+
+/* Your six selected photos */
+.menu-grid .menu-photo-card.wraps {
+    background-image: url("images/wrap-5.jpeg");
+}
+
+.menu-grid .menu-photo-card.sticks {
+    background-image: url("images/souvlaki.jpeg");
+}
+
+.menu-grid .menu-photo-card.burgers {
+    background-image: url("images/burger.jpeg");
+}
+
+.menu-grid .menu-photo-card.dinners {
+    background-image: url("images/dinner-5.jpeg");
+}
+
+.menu-grid .menu-photo-card.salads {
+    background-image: url("images/village.jpeg");
+}
+
+.menu-grid .menu-photo-card.sides {
+    background-image: url("images/tzatziki.jpeg");
+}
+
+/* Hide unselected categories */
+.menu-grid .menu-photo-card[hidden] {
+    display: none !important;
+}
+
+/* Tablet */
+@media (max-width: 1050px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Mobile */
+@media (max-width: 650px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ====================================
+   EXPANDED SINGLE CATEGORY VIEW
+==================================== */
+
+/* When only one menu card is visible */
+.menu-grid:has(.menu-photo-card:not([hidden]):only-of-type) {
+    grid-template-columns: 1fr;
+}
+
+/* Expand the selected category */
+.menu-grid:has(.menu-photo-card[hidden]) {
+    display: flex;
+    justify-content: center;
+}
+
+/* Wider, centered single category */
+.menu-grid:has(.menu-photo-card[hidden])
+.menu-photo-card:not([hidden]) {
+    width: 100%;
+    max-width: 850px;
+    min-height: 500px;
+    padding: 45px 55px;
+}
+
+/* Larger title when expanded */
+.menu-grid:has(.menu-photo-card[hidden])
+.menu-card-title {
+    font-size: 42px;
+    margin-bottom: 35px;
+}
+
+/* More spacious food rows */
+.menu-grid:has(.menu-photo-card[hidden])
+.menu-item {
+    padding: 15px 0;
+}
+
+/* Larger food names and prices */
+.menu-grid:has(.menu-photo-card[hidden])
+.menu-item h3,
+.menu-grid:has(.menu-photo-card[hidden])
+.menu-price {
+    font-size: 17px;
+}
+
+/* Mobile */
+@media (max-width: 650px) {
+    .menu-grid:has(.menu-photo-card[hidden])
+    .menu-photo-card:not([hidden]) {
+        padding: 30px 20px;
+        min-height: 0;
+    }
+
+    .menu-grid:has(.menu-photo-card[hidden])
+    .menu-card-title {
+        font-size: 30px;
+    }
+
+    .menu-grid:has(.menu-photo-card[hidden])
+    .menu-item h3,
+    .menu-grid:has(.menu-photo-card[hidden])
+    .menu-price {
+        font-size: 14px;
+    }
+}
+
+
+/* DESSERTS - LOUKOUMADES */
+.menu-grid .menu-photo-card.desserts {
+    background-image: url("images/gallery-3.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* PASTRIES - SPANAKOPITA & TIROPITA */
+.menu-grid .menu-photo-card.pastries {
+    background-image: url("images/gallery-2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* =====================================
+   FULL-WIDTH RESTAURANT GALLERY IMAGE
+===================================== */
+
+/* When Restaurant is selected, expand its only image */
+.gallery-grid:has(.gallery-item[data-category="restaurant"]:not([hidden]))
+.gallery-item[data-category="restaurant"]:only-child {
+    grid-column: 1 / -1;
+}
+
+/* Give restaurant photo a wide layout */
+.gallery-grid .gallery-item[data-category="restaurant"] {
+    overflow: hidden;
+}
+
+/* Fill the available photo area */
+.gallery-grid .gallery-item[data-category="restaurant"] img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* =====================================
+   ALEXANDROS INSTAGRAM FOOTER LINK
+===================================== */
+
+.footer-instagram {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 18px;
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: color 0.25s ease;
+}
+
+/* Instagram icon */
+.footer-instagram svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Hover effect */
+.footer-instagram:hover {
+    color: #7ec8ff;
+}
+
+/* Mobile */
+@media (max-width: 650px) {
+    .footer-instagram {
+        font-size: 13px;
+        gap: 8px;
+    }
+}

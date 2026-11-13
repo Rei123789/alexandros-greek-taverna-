@@ -66,32 +66,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // MENU CATEGORY FILTERS
-    const filterButtons = document.querySelectorAll(".filter-btn");
-    const menuItems = document.querySelectorAll(".menu-item");
+    
+ 
+ // MENU CATEGORY FILTERS
+const filterButtons = document.querySelectorAll(".filter-btn");
+const menuCards = document.querySelectorAll(".menu-photo-card");
 
-    filterButtons.forEach(button => {
-        button.addEventListener("click", () => {
+filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
 
-            const selectedCategory = button.dataset.filter;
+        const selectedCategory = button.dataset.filter;
 
-            filterButtons.forEach(btn => {
-                btn.classList.remove("active");
-                btn.setAttribute("aria-pressed", "false");
-            });
-
-            button.classList.add("active");
-            button.setAttribute("aria-pressed", "true");
-
-            menuItems.forEach(item => {
-                const matches =
-                    selectedCategory === "all" ||
-                    item.dataset.category === selectedCategory;
-
-                item.hidden = !matches;
-            });
+        // Update active button
+        filterButtons.forEach(btn => {
+            btn.classList.remove("active");
+            btn.setAttribute("aria-pressed", "false");
         });
+
+        button.classList.add("active");
+        button.setAttribute("aria-pressed", "true");
+
+        // Show or hide entire photo cards
+        menuCards.forEach(card => {
+            const matches =
+                selectedCategory === "all" ||
+                card.dataset.category === selectedCategory;
+
+            card.hidden = !matches;
+        });
+
     });
+});
+
+
 
     // SCROLL REVEAL ANIMATIONS
     const revealElements = document.querySelectorAll(".reveal");
@@ -155,5 +162,195 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
+// ===================================
+// ALEXANDROS PHOTO GALLERY
+// ===================================
+
+const galleryPhotos = [
+    ["table.jpeg", "restaurant", "Our Greek food selection"],
+    ["wrap.jpeg", "wraps", "Greek wrap"],
+    ["wrap-2.jpeg", "wraps", "Greek wrap"],
+    ["wrap-3.jpeg", "wraps", "Greek wrap"],
+    ["wrap-4.jpeg", "wraps", "Greek wrap"],
+    ["wrap-5.jpeg", "wraps", "Greek wrap"],
+    ["souvlaki.jpeg", "grill", "Greek souvlaki"],
+    ["souvlaki-2.jpeg", "grill", "Greek souvlaki"],
+    ["souvlaki-3.jpeg", "grill", "Greek souvlaki"],
+    ["souvlaki-4.jpeg", "grill", "Greek souvlaki"],
+    ["dinner.jpeg", "grill", "Greek dinner platter"],
+    ["dinner-2.jpeg", "grill", "Greek dinner platter"],
+    ["dinner-3.jpeg", "grill", "Greek dinner platter"],
+    ["dinner-4.jpeg", "grill", "Greek dinner platter"],
+    ["dinner-5.jpeg", "grill", "Greek dinner platter"],
+    ["burger.jpeg", "burgers", "Alexandros burger"],
+    ["burger-2.jpeg", "burgers", "Alexandros burger"],
+    ["greek.jpeg", "sides", "Greek dish"],
+    ["village.jpeg", "sides", "Village salad"],
+    ["tomato.jpeg", "sides", "Tomato salad"],
+    ["tzatziki.jpeg", "sides", "Tzatziki"],
+    ["kopanisti.jpeg", "sides", "Spicy feta dip"],
+    ["greek-fries.jpeg", "sides", "Greek fries"],
+    ["potatos.jpeg", "sides", "Lemon potatoes"],
+    ["rice.jpeg", "sides", "Rice"],
+    ["skepasti.jpeg", "skepasti", "Skepasti"],
+    
+];
+
+const photoGallery = document.getElementById("photoGallery");
+const photoFilters = document.querySelectorAll(".photo-filter");
+const photoMore = document.getElementById("photoMore");
+const photoLightbox = document.getElementById("photoLightbox");
+const photoLightboxImage = document.getElementById("photoLightboxImage");
+const photoLightboxCaption = document.getElementById("photoLightboxCaption");
+
+if (photoGallery && photoMore && photoLightbox) {
+
+    let activeCategory = "all";
+    let expanded = false;
+    let currentIndex = 0;
+    let previousFocus = null;
+
+    // CREATE ALL 27 PHOTO CARDS
+    galleryPhotos.forEach(([file, category, caption]) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "photo-card";
+        card.dataset.category = category;
+        card.dataset.full = "images/" + file;
+        card.dataset.caption = caption;
+        card.setAttribute("aria-label", "Enlarge " + caption);
+
+        const img = document.createElement("img");
+        img.src = "images/" + file;
+        img.alt = caption;
+        img.loading = "lazy";
+        img.decoding = "async";
+
+        card.appendChild(img);
+        photoGallery.appendChild(card);
+    });
+
+    const cards = [...photoGallery.querySelectorAll(".photo-card")];
+
+    function matchingPhotos() {
+        return cards.filter(card =>
+            activeCategory === "all" ||
+            card.dataset.category === activeCategory
+        );
+    }
+
+    function renderPhotos() {
+        const matches = matchingPhotos();
+
+        cards.forEach(card => {
+            const index = matches.indexOf(card);
+            card.hidden = index === -1 || (!expanded && index >= 6);
+        });
+
+        photoMore.hidden = matches.length <= 6;
+        photoMore.textContent = expanded
+            ? "Show Fewer Photos"
+            : `View All ${matches.length} Photos`;
+
+        photoMore.setAttribute("aria-expanded", String(expanded));
+    }
+
+    // FILTER BUTTONS
+    photoFilters.forEach(button => {
+        button.setAttribute("aria-pressed",
+            String(button.classList.contains("active")));
+
+        button.addEventListener("click", () => {
+            activeCategory = button.dataset.photoFilter;
+            expanded = false;
+
+            photoFilters.forEach(filter => {
+                const selected = filter === button;
+                filter.classList.toggle("active", selected);
+                filter.setAttribute("aria-pressed", String(selected));
+            });
+
+            renderPhotos();
+        });
+    });
+
+    // SHOW ALL / SHOW FEWER
+    photoMore.addEventListener("click", () => {
+        expanded = !expanded;
+        renderPhotos();
+    });
+
+    // FULLSCREEN VIEWER
+    function showPhoto(index) {
+        const matches = matchingPhotos();
+        if (!matches.length) return;
+
+        currentIndex = (index + matches.length) % matches.length;
+        const photo = matches[currentIndex];
+
+        photoLightboxImage.src = photo.dataset.full;
+        photoLightboxImage.alt = photo.querySelector("img").alt;
+        photoLightboxCaption.textContent = photo.dataset.caption;
+    }
+
+    cards.forEach(card => {
+        card.addEventListener("click", () => {
+            previousFocus = document.activeElement;
+            showPhoto(matchingPhotos().indexOf(card));
+
+            photoLightbox.hidden = false;
+            document.body.style.overflow = "hidden";
+
+            photoLightbox.querySelector(".photo-lightbox-close").focus();
+        });
+    });
+
+    function closeLightbox() {
+        photoLightbox.hidden = true;
+        document.body.style.overflow = "";
+        photoLightboxImage.removeAttribute("src");
+        previousFocus?.focus();
+    }
+
+    photoLightbox.querySelector(".photo-lightbox-close")
+        .addEventListener("click", closeLightbox);
+
+    photoLightbox.querySelector(".photo-lightbox-prev")
+        .addEventListener("click", () => showPhoto(currentIndex - 1));
+
+    photoLightbox.querySelector(".photo-lightbox-next")
+        .addEventListener("click", () => showPhoto(currentIndex + 1));
+
+    photoLightbox.addEventListener("click", event => {
+        if (event.target === photoLightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", event => {
+        if (photoLightbox.hidden) return;
+
+        if (event.key === "Escape") closeLightbox();
+        if (event.key === "ArrowLeft") showPhoto(currentIndex - 1);
+        if (event.key === "ArrowRight") showPhoto(currentIndex + 1);
+
+        if (event.key === "Tab") {
+            const controls = [
+                ...photoLightbox.querySelectorAll("button")
+            ];
+            const current = controls.indexOf(document.activeElement);
+
+            if (event.shiftKey && current === 0) {
+                event.preventDefault();
+                controls[controls.length - 1].focus();
+            } else if (!event.shiftKey &&
+                       current === controls.length - 1) {
+                event.preventDefault();
+                controls[0].focus();
+            }
+        }
+    });
+
+    renderPhotos();
+}
 
 });
